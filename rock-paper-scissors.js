@@ -86,5 +86,27 @@ function playRound(userChoiceFunc, compChoiceFunc) {
     return winner;
 }
 
-// Add scores to counter
-// Once 5 rounds are played, print results
+function gameOfFive() {
+    printWelcome();
+    let userWins = 0;
+    let compWins = 0;
+    for (let i = 0; i < 5; i++){
+        let winner = playRound(getUserChoice, getCompChoice);
+        // Add scores to counter
+        if (winner === "user") {
+            userWins++;
+        } else if (winner === "comp") {
+            compWins++;
+        } else {
+            console.log(`An error occurred in round ${i}.`);
+        }
+    }
+    // Once 5 rounds are played, print results
+    if (userWins > compWins) {
+        console.log(`You won by ${userWins} games to ${compWins}.`);
+    } else {
+        console.log(`You lost by ${userWins} games to ${compWins}.`);
+    }
+}
+
+gameOfFive();
