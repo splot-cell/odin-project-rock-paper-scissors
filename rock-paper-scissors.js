@@ -39,19 +39,52 @@ function getUserChoice() {
     let choice;
     while(!keepGoing) {
         choice = prompt(`Enter your selection (rock/paper/scissors):`, ``).toLowerCase();
+        // Check the user selected "rock", "paper", or "scissors"
         if (choice === `rock` || choice === `paper` || choice === `scissors`) {
             keepGoing = true;
         } else {
+            // If not, ask them for their choice again
             console.log(`I'm sorry, that wasn't a valid choice... try again.`);
         }
     }
     return choice;
 }
 
-//      Check the user selected "rock", "paper", or "scissors"
-//      If not, ask them for their choice again
 // Compare the user's choice and the computer's choice
-// Print result of comparison
-//      If it's a draw, play again
+function playRound(userChoiceFunc, compChoiceFunc) {
+    let winner = null;
+    while(!winner) {
+        let userChoice = userChoiceFunc();
+        let compChoice = compChoiceFunc();
+        // Print result of comparison
+        if(userChoice === compChoice) {
+            // If it's a draw, play again
+            console.log(`It's a draw this time, choose again...`);
+        } else if (userChoice === `rock` && compChoice === `paper`) {
+            console.log("You lose! Paper beats rock.");
+            winner = "comp";
+        } else if (userChoice === `rock` && compChoice === `scissors`) {
+            console.log("You win! Rock beats scissors.");
+            winner = "user";
+        } else if (userChoice === `paper` && compChoice === `rock`) {
+            console.log("You win! Paper beats rock.");
+            winner = "user";
+        } else if (userChoice === `paper` && compChoice === `scissors`) {
+            console.log("You lose! Scissors beats paper.");
+            winner = "comp";
+        } else if (userChoice === `scissors` && compChoice === `paper`) {
+            console.log("You win! Scissors beats paper.");
+            winner = "user";
+        } else if (userChoice === `scissors` && compChoice === `rock`) {
+            console.log("You lose! Rock beats scissors.");
+            winner = "comp";
+        } else {
+            console.log("An error occurred in determining the winner.");
+            winner = true;
+        }
+    }
+    return winner;
+}
+
 // Add scores to counter
 // Once 5 rounds are played, print results
