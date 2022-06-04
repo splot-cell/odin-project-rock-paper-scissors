@@ -34,6 +34,20 @@ function getCompChoice() {
 }
 
 // Ask user for their choice
+function getUserChoice() {
+    let keepGoing = false;
+    let choice;
+    while(!keepGoing) {
+        choice = prompt(`Enter your selection (rock/paper/scissors):`, ``).toLowerCase();
+        if (choice === `rock` || choice === `paper` || choice === `scissors`) {
+            keepGoing = true;
+        } else {
+            console.log(`I'm sorry, that wasn't a valid choice... try again.`);
+        }
+    }
+    return choice;
+}
+
 //      Check the user selected "rock", "paper", or "scissors"
 //      If not, ask them for their choice again
 // Compare the user's choice and the computer's choice
