@@ -9,11 +9,30 @@ Make a selection of either "rock", "paper", or "scissors", by typing it when pro
 Try and beat the highly advanced computer AI.
 
 Good luck!
-`   )
+`   );
 }
 // printWelcome();
 
 // Generate computer's choice
+function getCompChoice() {
+    let choice = Math.floor(Math.random() * 3);
+    let choiceString;
+    switch (choice) {
+        case 0:
+            choiceString = "rock";
+            break;
+        case 1:
+            choiceString = "paper";
+            break;
+        case 2:
+            choiceString = "scissors";
+            break;
+        default:
+            choiceString = "rock";
+    }
+    return choiceString;
+}
+
 // Ask user for their choice
 //      Check the user selected "rock", "paper", or "scissors"
 //      If not, ask them for their choice again
