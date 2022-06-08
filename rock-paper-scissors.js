@@ -42,7 +42,8 @@ function getUserChoice() {
         // Check the user selected "rock", "paper", or "scissors"
         if (choice === `rock` || choice === `paper` || choice === `scissors`) {
             keepGoing = true;
-        } else {
+        }
+        {
             // If not, ask them for their choice again
             console.log(`I'm sorry, that wasn't a valid choice... try again.`);
         }
@@ -51,62 +52,44 @@ function getUserChoice() {
 }
 
 // Compare the user's choice and the computer's choice
-function playRound(userChoiceFunc, compChoiceFunc) {
-    let winner = null;
-    while(!winner) {
-        let userChoice = userChoiceFunc();
-        let compChoice = compChoiceFunc();
-        // Print result of comparison
-        if(userChoice === compChoice) {
-            // If it's a draw, play again
-            console.log(`It's a draw this time, choose again...`);
-        } else if (userChoice === `rock` && compChoice === `paper`) {
-            console.log("You lose! Paper beats rock.");
-            winner = "comp";
-        } else if (userChoice === `rock` && compChoice === `scissors`) {
-            console.log("You win! Rock beats scissors.");
-            winner = "user";
-        } else if (userChoice === `paper` && compChoice === `rock`) {
-            console.log("You win! Paper beats rock.");
-            winner = "user";
-        } else if (userChoice === `paper` && compChoice === `scissors`) {
-            console.log("You lose! Scissors beats paper.");
-            winner = "comp";
-        } else if (userChoice === `scissors` && compChoice === `paper`) {
-            console.log("You win! Scissors beats paper.");
-            winner = "user";
-        } else if (userChoice === `scissors` && compChoice === `rock`) {
-            console.log("You lose! Rock beats scissors.");
-            winner = "comp";
-        } else {
-            console.log("An error occurred in determining the winner.");
-            winner = true;
-        }
+function playRound(userChoice) {
+    let compChoice = getCompChoice();
+    // Print result of comparison
+    if(userChoice === compChoice) {
+        // If it's a draw
+        console.log(`It's a draw this time, choose again...`);
+        return null;
     }
-    return winner;
-}
-
-function gameOfFive() {
-    printWelcome();
-    let userWins = 0;
-    let compWins = 0;
-    for (let i = 0; i < 5; i++){
-        let winner = playRound(getUserChoice, getCompChoice);
-        // Add scores to counter
-        if (winner === "user") {
-            userWins++;
-        } else if (winner === "comp") {
-            compWins++;
-        } else {
-            console.log(`An error occurred in round ${i}.`);
-        }
+    if (userChoice === `rock` && compChoice === `paper`) {
+        console.log("You lose! Paper beats rock.");
+        return "comp";
     }
-    // Once 5 rounds are played, print results
-    if (userWins > compWins) {
-        console.log(`You won by ${userWins} games to ${compWins}.`);
-    } else {
-        console.log(`You lost by ${userWins} games to ${compWins}.`);
+    if (userChoice === `rock` && compChoice === `scissors`) {
+        console.log("You win! Rock beats scissors.");
+        return "user";
+    }
+    if (userChoice === `paper` && compChoice === `rock`) {
+        console.log("You win! Paper beats rock.");
+        return "user";
+    }
+    if (userChoice === `paper` && compChoice === `scissors`) {
+        console.log("You lose! Scissors beats paper.");
+        return "comp";
+    }
+    if (userChoice === `scissors` && compChoice === `paper`) {
+        console.log("You win! Scissors beats paper.");
+        return "user";
+    }
+    if (userChoice === `scissors` && compChoice === `rock`) {
+        console.log("You lose! Rock beats scissors.");
+        return "comp";
     }
 }
 
-gameOfFive();
+const rockButton = document.querySelector("#rock");
+const paperButton = document.querySelector("#paper");
+const scissorsButton = document.querySelector("#scissors");
+
+rockButton.addEventListener("click", () => playRound("rock"));
+paperButton.addEventListener("click", () => playRound("paper"));
+scissorsButton.addEventListener("click", () => playRound("scissors"));
