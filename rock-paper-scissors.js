@@ -12,7 +12,7 @@ function playRound(e) {
     let userChoice = e.target.id;
     let compChoice = getCompChoice();
     // Determine winner and display results
-    if(userChoice === compChoice) {
+    if (userChoice === compChoice) {
         displayResult(`It's a draw this time, choose again...`);
     }
     if (userChoice === `rock` && compChoice === `paper`) {
