@@ -1,18 +1,3 @@
-// Print welcome message
-function printWelcome() {
-    console.log(
-`---WELCOME TO ROCK PAPER SCISSORS---
-   The hottest new game in town!
-        
-Instructions:
-Make a selection of either "rock", "paper", or "scissors", by typing it when prompted.
-Try and beat the highly advanced computer AI.
-
-Good luck!
-`   );
-}
-// printWelcome();
-
 // Generate computer's choice
 function getCompChoice() {
     let choice = Math.floor(Math.random() * 3);
@@ -33,22 +18,9 @@ function getCompChoice() {
     return choiceString;
 }
 
-// Ask user for their choice
-function getUserChoice() {
-    let keepGoing = false;
-    let choice;
-    while(!keepGoing) {
-        choice = prompt(`Enter your selection (rock/paper/scissors):`, ``).toLowerCase();
-        // Check the user selected "rock", "paper", or "scissors"
-        if (choice === `rock` || choice === `paper` || choice === `scissors`) {
-            keepGoing = true;
-        }
-        {
-            // If not, ask them for their choice again
-            console.log(`I'm sorry, that wasn't a valid choice... try again.`);
-        }
-    }
-    return choice;
+function displayResult(string) {
+    const resultsDiv = document.getElementById("results");
+    resultsDiv.textContent = string;
 }
 
 // Compare the user's choice and the computer's choice
@@ -57,38 +29,38 @@ function playRound(userChoice) {
     // Print result of comparison
     if(userChoice === compChoice) {
         // If it's a draw
-        console.log(`It's a draw this time, choose again...`);
+        displayResult(`It's a draw this time, choose again...`);
         return null;
     }
     if (userChoice === `rock` && compChoice === `paper`) {
-        console.log("You lose! Paper beats rock.");
+        displayResult("You lose! Paper beats rock.");
         return "comp";
     }
     if (userChoice === `rock` && compChoice === `scissors`) {
-        console.log("You win! Rock beats scissors.");
+        displayResult("You win! Rock beats scissors.");
         return "user";
     }
     if (userChoice === `paper` && compChoice === `rock`) {
-        console.log("You win! Paper beats rock.");
+        displayResult("You win! Paper beats rock.");
         return "user";
     }
     if (userChoice === `paper` && compChoice === `scissors`) {
-        console.log("You lose! Scissors beats paper.");
+        displayResult("You lose! Scissors beats paper.");
         return "comp";
     }
     if (userChoice === `scissors` && compChoice === `paper`) {
-        console.log("You win! Scissors beats paper.");
+        displayResult("You win! Scissors beats paper.");
         return "user";
     }
     if (userChoice === `scissors` && compChoice === `rock`) {
-        console.log("You lose! Rock beats scissors.");
+        displayResult("You lose! Rock beats scissors.");
         return "comp";
     }
 }
 
-const rockButton = document.querySelector("#rock");
-const paperButton = document.querySelector("#paper");
-const scissorsButton = document.querySelector("#scissors");
+const rockButton = document.getElementById("rock");
+const paperButton = document.getElementById("paper");
+const scissorsButton = document.getElementById("scissors");
 
 rockButton.addEventListener("click", () => playRound("rock"));
 paperButton.addEventListener("click", () => playRound("paper"));
