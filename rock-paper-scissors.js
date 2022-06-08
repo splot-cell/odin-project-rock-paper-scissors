@@ -23,24 +23,48 @@ function displayResult(string) {
     resultsDiv.textContent = string;
 }
 
+function resetScores(e) {
+    const compScore = document.getElementById("comp-score");
+    compScore.textContent = "0";
+    const userScore = document.getElementById("user-score");
+    userScore.textContent = "0";
+    e.target.style.visibility = "hidden";
+    enableUserChoiceButtons();
+}
+
+function showResetButton() {
+    const resetButton = document.getElementById("reset-button");
+    resetButton.style.visibility = "visible";
+}
+
 function updateScore(winner) {
     if (winner === "comp") {
         const compScore = document.getElementById("comp-score");
         let currentScore = Number(compScore.textContent) + 1;
         compScore.textContent = currentScore.toString();
-    } else if (winner === "user") {
+        if (currentScore === 5) {
+            disableUserChoiceButtons();
+            displayResult("COMPUTER WINS!");
+            showResetButton();
+        }
+    } else { // winner == "user"
         const userScore = document.getElementById("user-score");
         let currentScore = Number(userScore.textContent) + 1;
         userScore.textContent = currentScore.toString();
+        if (currentScore === 5) {
+            disableUserChoiceButtons();
+            displayResult("YOU WIN!");
+            showResetButton();
+        }
     }
 }
 
 // Compare the user's choice and the computer's choice
-function playRound(userChoice) {
+function playRound(e) {
+    let userChoice = e.target.id;
     let compChoice = getCompChoice();
     if(userChoice === compChoice) {
         displayResult(`It's a draw this time, choose again...`);
-        updateScore(null);
     }
     if (userChoice === `rock` && compChoice === `paper`) {
         displayResult("You lose! Paper beats rock.");
@@ -68,10 +92,31 @@ function playRound(userChoice) {
     }
 }
 
-const rockButton = document.getElementById("rock");
-const paperButton = document.getElementById("paper");
-const scissorsButton = document.getElementById("scissors");
+function enableUserChoiceButtons() {
+    const rockButton = document.getElementById("rock");
+    const paperButton = document.getElementById("paper");
+    const scissorsButton = document.getElementById("scissors");
 
-rockButton.addEventListener("click", () => playRound("rock"));
-paperButton.addEventListener("click", () => playRound("paper"));
-scissorsButton.addEventListener("click", () => playRound("scissors"));
+    rockButton.addEventListener("click", playRound);
+    paperButton.addEventListener("click", playRound);
+    scissorsButton.addEventListener("click", playRound);
+}
+
+function disableUserChoiceButtons() {
+    const rockButton = document.getElementById("rock");
+    const paperButton = document.getElementById("paper");
+    const scissorsButton = document.getElementById("scissors");
+
+    rockButton.removeEventListener("click", playRound);
+    paperButton.removeEventListener("click", playRound);
+    scissorsButton.removeEventListener("click", playRound);
+}
+
+function setup() {
+    enableUserChoiceButtons();
+
+    const resetButton = document.getElementById("reset-button");
+    resetButton.addEventListener("click", resetScores);
+}
+
+setup();
